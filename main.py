@@ -1,4 +1,3 @@
-#将下载失败的文件保存到数据库，下次运行程序可以选择是否再次下载失败的文件
 import sqlite3
 import requests
 from urllib import parse
@@ -85,11 +84,6 @@ class AlistDownload:
         if path in self.processed_paths:
             return
 
-        if time.time() - self.start_time > 300:
-            print("程序暂停1分钟...")
-            time.sleep(60)
-            self.start_time = time.time()
-
         url = self.host + "/api/fs/list"
         data = {"path": path, "password": "", "page": 1, "per_page": 0, "refresh": False}
         file_list = []
@@ -107,7 +101,7 @@ class AlistDownload:
                 file_list.append({"is_dir": True, "path": file_download_url})
             else:
                 file_download_url = self.host + "/d" + path + "/" + file_info["name"]
-                if file_info["name"].lower().endswith(('.mp4', '.mkv', '.avi', '.mov', '.wmv','.iso')):
+                if file_info["name"].lower().endswith(('.mp4', '.mkv', '.avi', '.mov', '.wmv')):
                     self.write_strm_file(path, file_info["name"].rsplit('.', 1)[0], file_download_url)
                 else:
                     self.download_file(path, file_info["name"], file_download_url)
@@ -200,4 +194,3 @@ if __name__ == '__main__':
         os.makedirs(save_path)
 
     AlistDownload(alist_url, save_path, db_path)
-
