@@ -1,3 +1,4 @@
+#移除暂停1分钟的逻辑
 import sqlite3
 import requests
 from urllib import parse
@@ -186,9 +187,9 @@ class AlistDownload:
 
 
 if __name__ == '__main__':
-    alist_url = "https://alist.hloli.eu.org/115/98%E5%A0%82/%E4%B8%AD%E6%96%87%E5%AD%97%E5%B9%95"
-    save_path = "/mnt/alist/onedrive/CloudDrive/OneDrive/STRM"
-    db_path = "/root/STRM/processed_paths.db"
+    alist_url = ""#alist地址
+    save_path = ""#下载地址
+    db_path = ""#本地数据库地址
 
     if not os.path.exists(save_path):
         os.makedirs(save_path)
